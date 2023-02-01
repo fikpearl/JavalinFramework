@@ -1,3 +1,5 @@
+package org.example;
+
 import org.example.Quote;
 import org.example.QuoteDB;
 
