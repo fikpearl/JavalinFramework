@@ -23,9 +23,12 @@ public class QuoteApiHandler {
      * @param context The Javalin Context for the HTTP GET Request
      */
     public static void getOne(Context context) {
-        Integer id = context.pathParamAsClass("id", Integer.class).get();//Remember that we specified the id of the quote will be in the path of the URI as /quote/{id}. Here we use Javalin’s context class to extract the id as an integer.
-        Quote quote = database.get(id);// call the database to retrieve the quote with that id.
-        context.json(quote);//Javalin conveniently converts the quote to JSON and adds it to the body of the response.
+        Integer id = context.pathParamAsClass("id", Integer.class).get();
+        Quote quote = database.get(id);
+        if (quote == null) {
+            throw new NotFoundResponse("Quote not found: " + id);
+        }
+        context.json(quote);
     }
 
     /**
